@@ -55,7 +55,7 @@ module.exports = function(username,password) {
 
   return {
     Assets: basicRequest('Assets',username,password),
-    AssetOperation: basicRequest('AssetOperation',page,username,password),
+    AssetOperation: basicRequest('AssetOperation',username,password),
     AssetUtilization: basicRequest('AssetUtilization',username,password),
     FuelUtilization: basicRequest('FuelUtilization',username,password),
     LoadCounts: basicRequest('LoadCounts',username,password)
