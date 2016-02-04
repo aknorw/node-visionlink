@@ -1,0 +1,33 @@
+{
+  "name": "node-visionlink",
+  "version": "0.1.0",
+  "description": "Node.js wrapper for Caterpillar's VisionLink APIs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aknorw/node-visionlink.git"
+  },
+  "keywords": [
+    "caterpillar",
+    "visionlink",
+    "telematics"
+  ],
+  "author": "aknorw",
+  "dependencies": {
+    "request": "^2.69.0",
+    "xml2js": "^0.4.16"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/aknorw/node-visionlink/issues"
+  },
+  "homepage": "https://github.com/aknorw/node-visionlink#readme"
+}
