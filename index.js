@@ -4,6 +4,7 @@ var request=require('request');
 var parseString=require('xml2js').parseString;
 
 var baseUrl='https://api.myvisionlink.com/';
+var pageUrl='/page/';
 
 function mergeObjects(obj1,obj2) {
   for (var key in obj2) {
@@ -21,7 +22,7 @@ function mergeObjects(obj1,obj2) {
 }
 
 function basicRequest(api,username,password) {
-  return function(options,callback) {
+  return function(page,options,callback) {
 
     if (typeof options === 'function') {
       options = {};
@@ -29,7 +30,7 @@ function basicRequest(api,username,password) {
     }
 
     var opt = {
-      'url':baseUrl+api,
+      'url':baseUrl+api+pageUrl+page.toString(),
       'headers':{
         'Authorization':'Basic '+new Buffer(username+':'+password).toString('base64')
       }
@@ -40,7 +41,7 @@ function basicRequest(api,username,password) {
     }
 
     request(opt, function(error,response,body) {
-      if (!error && response.statusCode==200) {
+      if (!error && response.statusCode == 200) {
         parseString(body, {trim:true,explicitArray:false}, function(err,obj) {
           callback(null,obj);
         })
@@ -54,7 +55,7 @@ module.exports = function(username,password) {
 
   return {
     Assets: basicRequest('Assets',username,password),
-    AssetOperation: basicRequest('AssetOperation',username,password),
+    AssetOperation: basicRequest('AssetOperation',page,username,password),
     AssetUtilization: basicRequest('AssetUtilization',username,password),
     FuelUtilization: basicRequest('FuelUtilization',username,password),
     LoadCounts: basicRequest('LoadCounts',username,password)

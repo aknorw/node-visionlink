@@ -8,12 +8,12 @@ var config = {
 var VisionLink=require('node-visionlink')(config.username,config.password);
 
 // Get assets informations, without request options
-VisionLink.Assets(function(err,data) {
+VisionLink.Assets(1,function(err,data) {
   console.log(data);
 })
 
 // Get fuel utilization, with request options
-VisionLink.FuelUtilization({
+VisionLink.FuelUtilization(2,{
   'proxy': 'http://proxy.company.com:8080',
   'headers':{
     'Connection': 'keep-alive'

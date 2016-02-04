@@ -13,11 +13,13 @@ First of all, be sure to have access to the VisionLink API services. You'll need
 
     var VisionLink=require('node-visionlink')('your_API_username','your_API_password');
 
-    VisionLink.Assets(options, function(err,data) {
+    VisionLink.Assets(pageNumber, options, function(err,data) {
       console.log(data);
     });
 
-`options` parameter is the same you would use with [request](https://github.com/request/request). See examples folder for basic configuration.
+`pageNumber` *(Number, required)* is related to the APIs navigation.
+
+`options` *(Object, optional)* parameter is the same you would use with [request](https://github.com/request/request). See examples folder for basic configuration.
 
 ## APIs
 
@@ -33,4 +35,5 @@ Refer to VisionLink documentation for additional information.
 
 ## Release History
 
+* 0.2.0 Support for APIs navigation
 * 0.1.0 Initial release
