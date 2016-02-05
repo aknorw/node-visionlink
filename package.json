@@ -1,6 +1,6 @@
 {
   "name": "node-visionlink",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Node.js wrapper for Caterpillar's VisionLink APIs.",
   "main": "index.js",
   "scripts": {

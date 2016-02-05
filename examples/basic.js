@@ -5,19 +5,32 @@ var config = {
   password: process.env.VL_PASSWORD || ''
 }
 
-var VisionLink=require('node-visionlink')(config.username,config.password);
+var wrapper = require('node-visionlink')(config.username,config.password);
 
-// Get assets informations, without request options
-VisionLink.Assets(1,function(err,data) {
+// VisionLink-Ready APIs
+
+// Get page 1 of assets informations, without request options
+wrapper.Ready.Assets(1, function(err,data) {
   console.log(data);
 })
 
-// Get fuel utilization, with request options
-VisionLink.FuelUtilization(2,{
-  'proxy': 'http://proxy.company.com:8080',
-  'headers':{
-    'Connection': 'keep-alive'
-  }
+// Get page 2 of fuel utilization, with request proxy option
+wrapper.Ready.FuelUtilization(2, {
+  'proxy': 'http://proxy.company.com:8080'
+}, function(err,data) {
+  console.log(data);
+})
+
+// VisionLink APIs
+
+// Retrieve all the data of 'testqueue' about fuel information, without request options
+wrapper.VisionLink.FuelInformation(0, function(err,data) {
+  console.log(data);
+})
+
+// Retrieve data from beyond position 1337 of 'myQueue' about events, with request proxy option
+wrapper.VisionLink.EventData('myQueue', 1337, {
+  'proxy': 'http://proxy.company.com:8080'
 }, function(err,data) {
   console.log(data);
 })
