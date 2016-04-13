@@ -1,8 +1,12 @@
-'use strict';
+export const READY_TOPICS = [
+  'Assets',
+  'AssetOperation',
+  'AssetUtilization',
+  'FuelUtilization',
+  'LoadCounts'
+];
 
-exports.VLReadyTopics = ['Assets', 'AssetOperation', 'AssetUtilization', 'FuelUtilization', 'LoadCounts'];
-
-exports.VLTopics = [{
+export const VL_TOPICS = [{
   'name': 'Diagnostic',
   'context': 'CATDataTopics',
   'version': 3,

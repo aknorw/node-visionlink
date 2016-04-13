@@ -1,15 +1,12 @@
-'use strict';
+import request from 'request';
+import { parseString } from 'xml2js';
 
-var request = require('request');
-var parseString = require('xml2js').parseString;
+import { VL_TOPICS } from './topics';
+import mergeObjects from './utils/mergeObjects';
 
-var Utils = require('./utils');
-var Config = require('./config');
+function VLRequest(api, username, password) {
 
-var baseUrl = 'https://www.myvisionlink.com/APIService/';
-
-function VLRequest(api,username,password) {
-  return function(queue_name,queue_position,options,callback) {
+  return (queue_name, queue_position, options, callback) => {
 
     if (typeof queue_name === 'number') {
       if (typeof queue_position === 'function') {
@@ -28,38 +25,39 @@ function VLRequest(api,username,password) {
       options = {};
     }
 
-    var opt = {
-      'url': baseUrl + api.context + '/v' + api.version.toString() + '/' + api.service,
+    let opt = {
+      'url': `https://www.myvisionlink.com/APIService/${api.context}/v${api.version.toString()}/${api.service}`,
       'headers': {
-        'Authorization': 'Basic ' + new Buffer(username + ':' + password).toString('base64')
+        'Authorization': `Basic ${new Buffer(username + ':' + password).toString('base64')}`
       }
     }
 
     if (api.topic) {
-      opt.url += '/' + queue_name + '/' + api.topic + '/' + queue_position;
+      opt.url += `/${queue_name}/${api.topic}/${queue_position}`
     }
 
     if (typeof options === 'object') {
-      Utils.mergeObjects(opt,options);
+      mergeObjects(opt, options);
     }
 
-    request(opt, function(error,response,body) {
+    request(opt, (error, response, body) => {
       if (!error && response.statusCode == 200) {
-        parseString(body, {trim:true,explicitArray:false}, function(err,obj) {
-          callback(null,obj);
+        parseString(body, { trim: true, explicitArray: false }, (err, obj) => {
+          callback(null, obj);
         })
       }
     })
 
   }
+
 }
 
-module.exports = function(username,password) {
+export default function (username, password) {
 
-  var functions = {};
+  const functions = {};
 
-  for (var i = 0 ; i < Config.VLTopics.length ; i++) {
-    functions[Config.VLTopics[i].name] = VLRequest(Config.VLTopics[i],username,password);
+  for (var i = 0 ; i < VL_TOPICS.length ; i++) {
+    functions[VL_TOPICS[i].name] = VLRequest(VL_TOPICS[i], username, password);
   }
 
   return functions;
