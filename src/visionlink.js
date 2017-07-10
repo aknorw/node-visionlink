@@ -2,55 +2,46 @@ import request from 'request';
 import { parseString } from 'xml2js';
 
 import { VL_TOPICS } from './topics';
-import mergeObjects from './utils/mergeObjects';
 
-function VLRequest(api, username, password) {
+const VLRequest = (api, username, password) => {
 
-  return (queue_name, queue_position, options, callback) => {
+  return ({ queue_name = 'testqueue', queue_position = 0, options = {} }) => {
 
-    if (typeof queue_name === 'number') {
-      if (typeof queue_position === 'function') {
-        callback = queue_position;
-        options = {};
-        queue_position = queue_name;
-        queue_name = 'testqueue';
-      } else {
-        callback = options;
-        options = queue_position;
-        queue_position = queue_name;
-        queue_name = 'testqueue';
+    const opt = Object.assign({}, {
+      url: `https://legacy.myvisionlink.com/APIService/${api.context}/v${api.version.toString()}/${api.service}`,
+      headers: {
+        Authorization: `Basic ${new Buffer(username + ':' + password).toString('base64')}`
       }
-    } else if (typeof options === 'function') {
-      callback = options;
-      options = {};
-    }
-
-    let opt = {
-      'url': `https://www.myvisionlink.com/APIService/${api.context}/v${api.version.toString()}/${api.service}`,
-      'headers': {
-        'Authorization': `Basic ${new Buffer(username + ':' + password).toString('base64')}`
-      }
-    }
+    }, options);
 
     if (api.topic) {
-      opt.url += `/${queue_name}/${api.topic}/${queue_position}`
+      opt.url += `/${queue_name}/${api.topic}/${queue_position}`;
     }
 
-    if (typeof options === 'object') {
-      mergeObjects(opt, options);
-    }
+    return new Promise((resolve, reject) => {
 
-    request(opt, (error, response, body) => {
-      if (!error && response.statusCode == 200) {
-        parseString(body, { trim: true, explicitArray: false }, (err, obj) => {
-          callback(null, obj);
-        })
-      }
-    })
+      return request(opt, (error, response, body) => {
 
-  }
+        if (error) {
+          return reject({ error });
+        } else if (response.statusCode !== 200) {
+          return reject({ statusCode: response.statusCode });
+        }
 
-}
+        return parseString(body, { trim: true, explicitArray: false }, (err, obj) => {
+          if (err) {
+            return reject({ error: err });
+          }
+          return resolve(obj);
+        });
+
+      });
+
+    });
+
+  };
+
+};
 
 export default function (username, password) {
 

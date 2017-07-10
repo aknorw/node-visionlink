@@ -9,7 +9,7 @@ export const READY_TOPICS = [
 export const VL_TOPICS = [{
   'name': 'Diagnostic',
   'context': 'CATDataTopics',
-  'version': 3,
+  'version': 4,
   'service': 'feed',
   'topic': 'Diagnostic'
 },{
@@ -21,7 +21,7 @@ export const VL_TOPICS = [{
 },{
   'name': 'EngineParameters',
   'context': 'CATDataTopics',
-  'version': 5,
+  'version': 6,
   'service': 'feed',
   'topic': 'Engine'
 },{
@@ -33,7 +33,7 @@ export const VL_TOPICS = [{
 },{
   'name': 'EventData',
   'context': 'CATDataTopics',
-  'version': 4,
+  'version': 5,
   'service': 'feed',
   'topic': 'Event'
 },{
@@ -56,7 +56,7 @@ export const VL_TOPICS = [{
 },{
   'name': 'SMULocation',
   'context': 'CATDataTopics',
-  'version': 3,
+  'version': 4,
   'service': 'feed',
   'topic': 'SMULOC'
 }]
