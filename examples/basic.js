@@ -8,7 +8,7 @@ const wrapper = require('node-visionlink')(account);
 // VisionLink-Ready APIs
 
 // Get page 1 of assets informations, without request options
-wrapper.Ready.Assets({ page: 1 })
+wrapper.Ready.Assets()
   .then(data => {
     console.log(data);
   })
