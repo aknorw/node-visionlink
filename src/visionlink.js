@@ -5,7 +5,7 @@ import { VL_TOPICS } from './topics';
 
 const VLRequest = (api, username, password) => {
 
-  return ({ queue_name = 'testqueue', queue_position = 0, options = {} }) => {
+  return ({ queue_name = 'testqueue', queue_position = 0, options = {} } = {}) => {
 
     const opt = Object.assign({}, {
       url: `https://legacy.myvisionlink.com/APIService/${api.context}/v${api.version.toString()}/${api.service}`,

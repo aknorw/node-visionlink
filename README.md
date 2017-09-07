@@ -81,6 +81,7 @@ Key | `typeof` value | Required | ?
 
 ## Release History
 
+* **0.5.1** Fixed blank object issue
 * **0.5.0**
   * Every function now uses an object as param :warning:
   * No more callback hell: functions now return promises :warning:

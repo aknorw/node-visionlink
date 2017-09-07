@@ -5,7 +5,7 @@ import { READY_TOPICS } from './topics';
 
 const readyRequest = (api, username, password) => {
 
-  return ({ page = 1, options = {} }) => {
+  return ({ page = 1, options = {} } = {}) => {
 
     const opt = Object.assign({}, {
       url: `https://api.myvisionlink.com/${api}/page/${page.toString()}`,
